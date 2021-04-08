@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css?family=Playfair+Display|Source+Code+Pro');
+
+* {
+  font-family: 'Source Code Pro', monospace;
+}
+
+img {
+  max-width: 100%;
+}
+
+blockquote {
+  border-left: 1px solid black;
+  margin-left: 0;
+  padding-left: 40px;
+}
+
+a {
+  color: black;
+  &:hover {
+    color: $accentColor;
+  }
+}
+
+::selection {
+  background: $accentColor;
+  color: white;
+}
+
+li{
+  margin-bottom: 10px;
+}

@@ -1,0 +1,31 @@
+.centered {
+  max-width: $maxWidth;
+  margin: 0 auto;
+}
+
+.fullscreen-overlay {
+  position: absolute;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: -1;
+}
+
+.eyes {
+  position: absolute;
+  z-index: -1;
+  left: calc(50% - 100px);
+  top: calc(50% - 100px);
+}
+
+.fade-enter-active,
+.fade-leave-active{
+  transition: opacity 0.2s, transform 0.4s;
+}
+
+.fade-enter,
+.fade-leave-to{
+  opacity: 0;
+  transform: translateY(100px) translateZ(0);
+}

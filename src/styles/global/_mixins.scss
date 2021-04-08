@@ -1,0 +1,34 @@
+//TODO: Fix weird PHPStorm autoformatting here
+$deviceSizes: (
+        sm: 544px,
+        md: 768px,
+        lg: 992px,
+        xl: 1200px
+);
+
+@function get-size($name) {
+  $size: map_get($deviceSizes, $name);
+  @return if($size != null, $size, null);
+}
+
+@mixin up-from($name) {
+  $size: get-size($name);
+  @if ($size) {
+    @media (min-width: $size) {
+      @content;
+    }
+  } @else {
+    @error "No such device size: " + $name
+  }
+}
+
+@mixin down-from($name) {
+  $size: get-size($name);
+  @if ($size) {
+    @media (max-width: $size) {
+      @content;
+    }
+  } @else {
+    @error "No such device size: " + $name
+  }
+}
