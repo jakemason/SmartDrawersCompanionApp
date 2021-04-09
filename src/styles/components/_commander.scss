@@ -4,7 +4,7 @@
   $verticalSpace: 25px;
 
   .hidden {
-    display: none;
+    display: none !important;
   }
 
   &.card {
@@ -12,7 +12,7 @@
     padding: 25px;
     padding-bottom: 85px;
     box-shadow: $simpleShadow;
-    background: #F6F9FC;
+    background: whitesmoke;
 
     $fontSize: 16px;
 
@@ -20,19 +20,44 @@
       label {
         font-size: $fontSize - 4px;
         font-style: italic;
+        display: block;
+        margin-bottom: 5px;
       }
 
       input {
         font-size: $fontSize;
         background: transparent;
         border: 0;
-        border-bottom: 1px solid black;
+        border-bottom: 1px solid $accentColor;
         box-shadow: none;
         margin-bottom: $verticalSpace;
         width: 100%;
 
         &[type="file"] {
           border: 0;
+        }
+      }
+
+      button {
+        $buttonColor: $accentColor;
+        display: block;
+        background: $buttonColor;
+        font-size: 20px;
+        padding: 10px 35px;
+        border: 2px solid $buttonColor;
+        color: white;
+        cursor: pointer;
+        border-radius: 8px;
+
+        &:hover {
+          background: darken($buttonColor, 10%);
+          border: 2px solid darken($buttonColor, 10%);
+        }
+
+        &:focus {
+          background: transparent;
+          color: $buttonColor;
+          outline: 0;
         }
       }
     }
@@ -63,28 +88,56 @@
         .count {
           cursor: pointer;
           padding: 15px 30px;
-          border: 2px solid black;
+          border: 2px solid $accentColor;
           width: 49%;
           display: inline-block;
           text-align: center;
+          border-top-left-radius: 8px;
+          border-bottom-left-radius: 8px;
+          transition: $transitionAll;
+
+          &:hover {
+            background: lighten($accentColor, 60%);
+          }
 
           &.active {
-            background: black;
+            background: $accentColor;
             color: white;
           }
 
           &:last-child {
             border-left: 0;
+            border-radius: 0 8px 8px 0;
           }
         }
 
 
       }
 
-      .color-selector {
+      .selected-colors {
+        position: absolute;
+        top: 15px;
+        right: 15px;
         display: flex;
         padding: 0;
-        margin: 0;
+        margin: 0 0 $verticalSpace;
+        list-style: none;
+        opacity: 0.8;
+
+        li {
+          $size: 25px;
+          width: $size;
+          height: $size;
+          margin-right: 10px;
+          border-radius: 100%;
+        }
+      }
+
+      .color-selector {
+        display: flex;
+        width: 100%;
+        padding: 0;
+        margin: 0 0 $verticalSpace;
         list-style: none;
 
         li {
@@ -95,9 +148,11 @@
           margin-right: 10px;
           border-radius: 100%;
           border: 2px solid transparent;
+          opacity: 0.5;
 
           &.active {
             border: 2px solid black;
+            opacity: 1;
           }
         }
       }

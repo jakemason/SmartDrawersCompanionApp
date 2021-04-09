@@ -2,7 +2,7 @@
 
 * {
   font-family: 'Lato', monospace;
-  color: $dark-gray;
+  color: $accentColor;
   box-sizing: border-box;
   margin: 0;
 }
@@ -23,10 +23,15 @@ p, h1, h2, h3, h4, h5, li {
 
 a {
   color: $accentColor;
+  transition: $transitionAll;
 
   &:hover {
     color: black;
   }
+}
+
+button {
+  transition: $transitionAll;
 }
 
 ::selection {
@@ -36,4 +41,8 @@ a {
 
 li {
   margin-bottom: 10px;
+}
+
+.italics {
+  font-style: italic;
 }

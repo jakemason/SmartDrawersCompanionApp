@@ -9,18 +9,18 @@
                  :class="{ hidden: commander_count === 1 }" alt="Second Commander"/>
           </div>
           <div class="content">
-            <h2 class="center">{{ deck_name }}</h2>
-            <form action="#" enctype="multipart/form-data">
+            <h2 class="center italics">{{ deck_name }}</h2>
+            <form @submit="save" action="#" enctype="multipart/form-data">
               <label for="deck_name">
                 Deck Name
                 <input v-model="deck_name" id="deck_name" name="deck_name" type="text"
-                       placeholder="Clone-based Riku, Combo Ghave, etc">
+                       placeholder="Clone-focused Riku, Combo Ghave, etc" required>
               </label>
 
               <label for="power_level">
                 Power Level
                 <input id="power_level" name="power_level" type="number"
-                       placeholder="Rate the strength of this deck relative to your others">
+                       placeholder="1 - 10">
               </label>
 
               <div class="commander_counts">
@@ -43,39 +43,43 @@
                      type="file" accept="image/*"
                      @change="onFileChange($event, 1)">
 
+              <label>Deck Colors</label>
+              <ul class="color-selector">
+                <li class="w" v-bind:class="{ active: w }" @click="toggleColor('w')">
+                  <img src="dist/images/W.png" alt="">
+                </li>
+                <li class="u" v-bind:class="{ active: u }" @click="toggleColor('u')">
+                  <img src="dist/images/U.png" alt="">
+                </li>
+                <li class="b" v-bind:class="{ active: b }" @click="toggleColor('b')">
+                  <img src="dist/images/B.png" alt="">
+                </li>
+                <li class="r" v-bind:class="{ active: r }" @click="toggleColor('r')">
+                  <img src="dist/images/R.png" alt="">
+                </li>
+                <li class="g" v-bind:class="{ active: g }" @click="toggleColor('g')">
+                  <img src="dist/images/G.png" alt="">
+                </li>
+              </ul>
+
+              <ul class="selected-colors">
+                <li class="w" v-bind:class="{ hidden: !w }"><img src="dist/images/W.png" alt=""></li>
+                <li class="u" v-bind:class="{ hidden: !u }"><img src="dist/images/U.png" alt=""></li>
+                <li class="b" v-bind:class="{ hidden: !b }"><img src="dist/images/B.png" alt=""></li>
+                <li class="r" v-bind:class="{ hidden: !r }"><img src="dist/images/R.png" alt=""></li>
+                <li class="g" v-bind:class="{ hidden: !g }"><img src="dist/images/G.png" alt=""></li>
+              </ul>
+
               <input type="hidden" name="w" v-model="w">
               <input type="hidden" name="u" v-model="u">
               <input type="hidden" name="b" v-model="b">
               <input type="hidden" name="r" v-model="r">
               <input type="hidden" name="g" v-model="g">
-
-              <input type="hidden" name="commander_count">
+              <input type="hidden" name="deck_index" :value="$props.deck_index">
+              <button>Save</button>
             </form>
-            <ul class="color-selector">
-              <li class="w" v-bind:class="{ active: w }" @click="toggleColor('w')">
-                <img src="dist/images/W.png" alt="">
-              </li>
-              <li class="u" v-bind:class="{ active: u }" @click="toggleColor('u')">
-                <img src="dist/images/U.png" alt="">
-              </li>
-              <li class="b" v-bind:class="{ active: b }" @click="toggleColor('b')">
-                <img src="dist/images/B.png" alt="">
-              </li>
-              <li class="r" v-bind:class="{ active: r }" @click="toggleColor('r')">
-                <img src="dist/images/R.png" alt="">
-              </li>
-              <li class="g" v-bind:class="{ active: g }" @click="toggleColor('g')">
-                <img src="dist/images/G.png" alt="">
-              </li>
-            </ul>
           </div>
         </div>
-      </div>
-      <div class="col-12">
-        <h1>Test</h1>
-        <h2>Test</h2>
-        <h3>Testa</h3>
-        Test
       </div>
     </div>
   </div>
@@ -83,7 +87,8 @@
 
 <script>
 export default {
-  name: 'Commanders',
+  name: 'DeckEditor',
+  props: ['deck_index'],
   data() {
     return {
       // Frustratingly, we need to use an object here instead of an array.
@@ -104,6 +109,10 @@ export default {
     }
   },
   methods: {
+    save(e) {
+      e.preventDefault();
+      this.$emit('save', JSON.stringify(this.$data));
+    },
     setCommanderCount: function (num) {
       this.commander_count = num;
     },
