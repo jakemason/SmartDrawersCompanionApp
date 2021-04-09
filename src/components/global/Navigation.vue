@@ -1,41 +1,33 @@
-<!-- This assumes you will only have one level of nesting -->
-<!-- A different solution is required for a mega-menu, etc -->
 <template>
-    <nav class="navigation">
-        <ul class="menu">
-            <li v-for="item in nav_tree">
-                <NavigationItem :item="item"></NavigationItem>
-                <ul class="submenu" v-if="item.children">
-                    <li v-for="child in item.children">
-                        <NavigationItem :item="child"></NavigationItem>
-                    </li>
-                </ul>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <nav class="navigation">
+          <ul class="menu">
+            <li v-for="item in nav">
+              <NavigationItem :item="item"></NavigationItem>
             </li>
-        </ul>
-    </nav>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
-    import NavigationItem from "./NavigationItem";
+import NavigationItem from "./NavigationItem";
 
-    export default {
-        components: {
-            NavigationItem
-        },
-        data() {
-            return {
-                nav_tree: null
-            }
-        },
-        mounted() {
-            let url = window.SETTINGS.SITE_URL + window.SETTINGS.API_WPVUE_BASE + 'navigation';
-            fetch(url)
-                .then((response) => {
-                    return response.json();
-                })
-                .then((result) => {
-                    this.nav_tree = result;
-                });
-        }
+export default {
+  components: {
+    NavigationItem
+  },
+  data() {
+    return {
+      nav: [
+        {is_relative_link: 'true', title: 'Commanders', url: '/'},
+        {is_relative_link: 'true', title: 'Shelves', url: '/test'},
+      ],
     }
+  }
+}
 </script>

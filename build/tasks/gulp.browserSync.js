@@ -1,13 +1,17 @@
 module.exports = (packages, config) => {
     return () => {
         packages.bs.init(['*'], {
-            proxy: config.browserSync.proxy,
+            // proxy: config.browserSync.proxy,
             port: config.browserSync.port,
             root: config.dir.root,
-            ui: false,
+            // ui: false,
             online: false, // reduces start-up time
             open: {
                 file: 'index.php'
+            },
+            server: {
+                baseDir: "../.",
+                index: "index.html"
             },
             notify: {
                 styles: {

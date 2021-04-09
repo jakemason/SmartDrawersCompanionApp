@@ -1,0 +1,106 @@
+.commander {
+  display: flex;
+
+  $verticalSpace: 25px;
+
+  .hidden {
+    display: none;
+  }
+
+  &.card {
+    border-radius: 8px;
+    padding: 25px;
+    padding-bottom: 85px;
+    box-shadow: $simpleShadow;
+    background: #F6F9FC;
+
+    $fontSize: 16px;
+
+    form {
+      label {
+        font-size: $fontSize - 4px;
+        font-style: italic;
+      }
+
+      input {
+        font-size: $fontSize;
+        background: transparent;
+        border: 0;
+        border-bottom: 1px solid black;
+        box-shadow: none;
+        margin-bottom: $verticalSpace;
+        width: 100%;
+
+        &[type="file"] {
+          border: 0;
+        }
+      }
+    }
+
+    .image {
+      position: relative;
+
+      .second-commander {
+        position: absolute;
+        top: 45px;
+        left: 15px;
+      }
+
+      img {
+        padding-right: 35px;
+      }
+
+      width: 40%;
+    }
+
+    .content {
+      width: 60%;
+
+      .commander_counts {
+        display: flex;
+        margin-bottom: $verticalSpace;
+
+        .count {
+          cursor: pointer;
+          padding: 15px 30px;
+          border: 2px solid black;
+          width: 49%;
+          display: inline-block;
+          text-align: center;
+
+          &.active {
+            background: black;
+            color: white;
+          }
+
+          &:last-child {
+            border-left: 0;
+          }
+        }
+
+
+      }
+
+      .color-selector {
+        display: flex;
+        padding: 0;
+        margin: 0;
+        list-style: none;
+
+        li {
+          $size: 35px;
+          width: $size;
+          height: $size;
+          cursor: pointer;
+          margin-right: 10px;
+          border-radius: 100%;
+          border: 2px solid transparent;
+
+          &.active {
+            border: 2px solid black;
+          }
+        }
+      }
+    }
+  }
+}

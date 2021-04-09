@@ -1,7 +1,10 @@
-@import url('https://fonts.googleapis.com/css?family=Playfair+Display|Source+Code+Pro');
+@import url('https://fonts.googleapis.com/css?family=Lato');
 
 * {
-  font-family: 'Source Code Pro', monospace;
+  font-family: 'Lato', monospace;
+  color: $dark-gray;
+  box-sizing: border-box;
+  margin: 0;
 }
 
 img {
@@ -14,18 +17,23 @@ blockquote {
   padding-left: 40px;
 }
 
+p, h1, h2, h3, h4, h5, li {
+  margin-bottom: 8px;
+}
+
 a {
-  color: black;
+  color: $accentColor;
+
   &:hover {
-    color: $accentColor;
+    color: black;
   }
 }
 
 ::selection {
-  background: $accentColor;
+  background: black;
   color: white;
 }
 
-li{
+li {
   margin-bottom: 10px;
 }

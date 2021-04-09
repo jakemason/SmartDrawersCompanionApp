@@ -11,7 +11,7 @@ const config = {
     },
     "browserSync": {
         port: 9001,
-        proxy: "https://wpnew.test",
+        proxy: "http://localhost:8000",
         ui: false
     }
 };

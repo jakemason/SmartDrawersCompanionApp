@@ -7,7 +7,7 @@ import Router from 'vue-router'
 // This allows async loading, but also creates additional bundle.js files
 // that need to be individually enqueued by WordPress. Need to see how we can work
 // around that.
-// const Home = () => import('./components/singles/Home.vue')
+const Home = () => import('./components/pages/Home.vue')
 // const PostSingle = () => import('./components/singles/Post')
 // const PageSingle = () => import('./components/singles/Page')
 // const SearchSingle = () => import('./components/singles/Search')
@@ -21,6 +21,7 @@ const router = new Router({
     routes: [
         // 404 above regex captures to preserve priority
         //{path: '/404', name: '404', component: FourOhFour},
+        {path: '/', name: 'Commanders', component: Home},
     ],
     mode: 'history',
 
