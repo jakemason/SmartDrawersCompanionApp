@@ -3,6 +3,10 @@
   margin: 0 auto;
 }
 
+.hidden {
+  display: none !important;
+}
+
 .fullscreen-overlay {
   position: absolute;
   bottom: 0;

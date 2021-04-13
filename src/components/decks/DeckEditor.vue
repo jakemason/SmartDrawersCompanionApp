@@ -2,7 +2,11 @@
   <div class="container">
     <div class="row">
       <div class="col-12">
-        <div class="commander card active">
+        <div style="margin-bottom: 40px;" v-if="is_saved" class="center">
+          <h2>Currently Editing: {{ this.deck_name }}</h2>
+          <button @click="addNewDeck($event)" class="new_deck">Add A New Deck</button>
+        </div>
+        <div class="deck-editor card active">
           <div class="image">
             <img :src="commander_images.first" alt="First Commander"/>
             <img :src="commander_images.second" class="second-commander"
@@ -20,54 +24,58 @@
               <label for="power_level">
                 Power Level
                 <input id="power_level" name="power_level" type="number"
-                       placeholder="1 - 10">
+                       placeholder="1 - 10" v-model="power_level">
               </label>
 
               <div class="commander_counts">
-                <div class="count" @click="setCommanderCount(1)" v-bind:class="{ active: commander_count === 1 }">
+                <div class="count" @click="setCommanderCount(1)" :class="{ active: commander_count === 1 }">
                   Single Commander
                 </div>
-                <div class="count" @click="setCommanderCount(2)" v-bind:class="{ active: commander_count === 2 }">
+                <div class="count" @click="setCommanderCount(2)" :class="{ active: commander_count === 2 }">
                   Dual Commanders
                 </div>
               </div>
 
               <label for="commander_1_image">First Commander's Image</label>
               <input id="commander_1_image" name="commander_1_image" type="file" accept="image/*"
-                     @change="onFileChange($event, 0)">
+                     @change="onImageUpload($event, 0)">
 
-              <label v-bind:class="{ hidden: commander_count === 1 }"
+              <label :class="{ hidden: commander_count === 1 }"
                      for="commander_2_image"> Second Commander's Image</label>
-              <input v-bind:class="{ hidden: commander_count === 1 }"
+              <input :class="{ hidden: commander_count === 1 }"
                      id="commander_2_image" name="commander_2_image"
                      type="file" accept="image/*"
-                     @change="onFileChange($event, 1)">
+                     @change="onImageUpload($event, 1)" :required="commander_count === 2">
 
               <label>Deck Colors</label>
               <ul class="color-selector">
-                <li class="w" v-bind:class="{ active: w }" @click="toggleColor('w')">
+                <li class="w" :class="{ active: w }" @click="toggleColor('w')">
                   <img src="dist/images/W.png" alt="">
                 </li>
-                <li class="u" v-bind:class="{ active: u }" @click="toggleColor('u')">
+                <li class="u" :class="{ active: u }" @click="toggleColor('u')">
                   <img src="dist/images/U.png" alt="">
                 </li>
-                <li class="b" v-bind:class="{ active: b }" @click="toggleColor('b')">
+                <li class="b" :class="{ active: b }" @click="toggleColor('b')">
                   <img src="dist/images/B.png" alt="">
                 </li>
-                <li class="r" v-bind:class="{ active: r }" @click="toggleColor('r')">
+                <li class="r" :class="{ active: r }" @click="toggleColor('r')">
                   <img src="dist/images/R.png" alt="">
                 </li>
-                <li class="g" v-bind:class="{ active: g }" @click="toggleColor('g')">
+                <li class="g" :class="{ active: g }" @click="toggleColor('g')">
                   <img src="dist/images/G.png" alt="">
+                </li>
+                <li class="g" :class="{ active: c }" @click="toggleColor('c')">
+                  <img src="dist/images/C.png" alt="">
                 </li>
               </ul>
 
               <ul class="selected-colors">
-                <li class="w" v-bind:class="{ hidden: !w }"><img src="dist/images/W.png" alt=""></li>
-                <li class="u" v-bind:class="{ hidden: !u }"><img src="dist/images/U.png" alt=""></li>
-                <li class="b" v-bind:class="{ hidden: !b }"><img src="dist/images/B.png" alt=""></li>
-                <li class="r" v-bind:class="{ hidden: !r }"><img src="dist/images/R.png" alt=""></li>
-                <li class="g" v-bind:class="{ hidden: !g }"><img src="dist/images/G.png" alt=""></li>
+                <li class="w" :class="{ hidden: !w }"><img src="dist/images/W.png" alt=""></li>
+                <li class="u" :class="{ hidden: !u }"><img src="dist/images/U.png" alt=""></li>
+                <li class="b" :class="{ hidden: !b }"><img src="dist/images/B.png" alt=""></li>
+                <li class="r" :class="{ hidden: !r }"><img src="dist/images/R.png" alt=""></li>
+                <li class="g" :class="{ hidden: !g }"><img src="dist/images/G.png" alt=""></li>
+                <li class="c" :class="{ hidden: !c }"><img src="dist/images/C.png" alt=""></li>
               </ul>
 
               <input type="hidden" name="w" v-model="w">
@@ -75,9 +83,18 @@
               <input type="hidden" name="b" v-model="b">
               <input type="hidden" name="r" v-model="r">
               <input type="hidden" name="g" v-model="g">
+              <input type="hidden" name="c" v-model="c">
               <input type="hidden" name="deck_index" :value="$props.deck_index">
-              <button>Save</button>
+
+              <button v-if="!is_saved">Save</button>
+              <button v-else>Update</button>
+
+              <button v-if="show_confirm_delete_prompt" class="red" @click="deleteDeck($event)" @blur="resetDelete"
+                      :disabled="!is_saved">Are you sure?
+              </button>
+              <button v-else class="red" @click="deleteDeck($event)" :disabled="!is_saved">Delete</button>
             </form>
+
           </div>
         </div>
       </div>
@@ -99,29 +116,106 @@ export default {
         first: 'dist/images/commanderplaceholder.jpeg',
         second: 'dist/images/commanderplaceholder.jpeg',
       },
+      index: 0,
       deck_name: '',
       commander_count: 1,
+      power_level: null,
       w: false,
       u: false,
       b: false,
       r: false,
       g: false,
+      c: false,
+      is_saved: false,
+      show_confirm_delete_prompt: false,
+    }
+  },
+  watch: {
+    deck_index: function (newVal, oldVal) {
+      /*
+      TODO: What I probably should do is define Deck as a data-only component and pass that as a prop
+            rather than passing the index like this.
+      */
+      let currentDecks = localStorage.getItem('decks');
+      if (currentDecks != null) {
+        currentDecks = JSON.parse(currentDecks);
+      }
+      let deck = currentDecks[newVal];
+      if (deck == null) {
+        this.reset();
+      } else {
+        this.w = deck.w;
+        this.u = deck.u;
+        this.b = deck.b;
+        this.r = deck.r;
+        this.g = deck.g;
+        this.c = deck.c;
+        this.power_level = deck.power_level;
+
+        this.index = deck.index;
+        this.commander_images.first = deck.commander_images.first;
+        this.commander_images.second = deck.commander_images.second;
+        this.deck_name = deck.deck_name;
+        this.commander_count = deck.commander_count;
+        this.is_saved = true;
+      }
+      console.log("Updating editor.");
     }
   },
   methods: {
+    resetDelete() {
+      this.show_confirm_delete_prompt = false;
+    },
+    reset() {
+      this.commander_images = {
+        first: 'dist/images/commanderplaceholder.jpeg',
+        second: 'dist/images/commanderplaceholder.jpeg',
+      };
+      this.index = 0;
+      this.deck_name = '';
+      this.commander_count = 1;
+      this.w = false;
+      this.u = false;
+      this.b = false;
+      this.r = false;
+      this.g = false;
+      this.c = false;
+      this.power_level = null;
+      this.is_saved = false;
+    },
+    addNewDeck(e) {
+      e.preventDefault();
+      this.$emit('newDeck', JSON.stringify(this.$data));
+    },
     save(e) {
       e.preventDefault();
+      this.is_saved = true;
       this.$emit('save', JSON.stringify(this.$data));
+    },
+    deleteDeck(e) {
+      e.preventDefault();
+      if (!this.show_confirm_delete_prompt) {
+        this.show_confirm_delete_prompt = true;
+        return;
+      }
+      this.reset();
+      this.$emit('deleteDeck', this.index);
+      this.show_confirm_delete_prompt = false;
     },
     setCommanderCount: function (num) {
       this.commander_count = num;
     },
-    onFileChange(e, slot) {
+    onImageUpload(e, slot) {
       const file = e.target.files[0];
-      if (slot === 0) {
-        this.commander_images.first = URL.createObjectURL(file);
-      } else {
-        this.commander_images.second = URL.createObjectURL(file);
+      let reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onloadend = (event) => {
+        let base64data = reader.result;
+        if (slot === 0) {
+          this.commander_images.first = base64data;
+        } else {
+          this.commander_images.second = base64data;
+        }
       }
     },
     toggleColor: function (color) {
@@ -140,6 +234,9 @@ export default {
           break;
         case 'g':
           this.g = !this.g;
+          break;
+        case 'c':
+          this.c = !this.c;
           break;
       }
     }

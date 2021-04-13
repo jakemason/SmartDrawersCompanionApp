@@ -10,6 +10,37 @@ $deviceSizes: (
   @return if($size != null, $size, null);
 }
 
+@mixin button($color) {
+  $buttonColor: $color;
+  display: inline-block;
+  background: $buttonColor;
+  font-size: 20px;
+  padding: 10px 35px;
+  border: 2px solid $buttonColor;
+  color: white;
+  cursor: pointer;
+  border-radius: 8px;
+
+  &:disabled {
+    cursor: not-allowed;
+    background: $light-gray;
+    color: white;
+    border: 2px solid $light-gray;
+  }
+
+  &:hover:not(:disabled) {
+    color: white;
+    background: darken($buttonColor, 10%);
+    border: 2px solid darken($buttonColor, 10%);
+  }
+
+  &:focus {
+    background: transparent;
+    color: $buttonColor;
+    outline: 0;
+  }
+}
+
 @mixin up-from($name) {
   $size: get-size($name);
   @if ($size) {

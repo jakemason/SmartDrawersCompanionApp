@@ -18,12 +18,13 @@ const DeckEditing = () => import('./components/pages/DeckEditing.vue')
 Vue.use(Router);
 
 const router = new Router({
+    mode: 'history',
     routes: [
         // 404 above regex captures to preserve priority
         //{path: '/404', name: '404', component: FourOhFour},
         {path: '/', name: 'Home', component: DeckEditing},
     ],
-    mode: 'history',
+
 
     // Prevents window from scrolling back to top
     // when navigating between components/views

@@ -46,3 +46,11 @@ li {
 .italics {
   font-style: italic;
 }
+
+button {
+  @include button($accentColor);
+
+  &.red {
+    @include button(red);
+  }
+}

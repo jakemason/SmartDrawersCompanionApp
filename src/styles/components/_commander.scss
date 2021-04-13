@@ -1,15 +1,12 @@
-.commander {
+.deck-editor {
   display: flex;
 
   $verticalSpace: 25px;
 
-  .hidden {
-    display: none !important;
-  }
-
   &.card {
+    position: relative;
     border-radius: 8px;
-    padding: 25px;
+    padding: 40px 35px;
     padding-bottom: 85px;
     box-shadow: $simpleShadow;
     background: whitesmoke;
@@ -35,29 +32,6 @@
 
         &[type="file"] {
           border: 0;
-        }
-      }
-
-      button {
-        $buttonColor: $accentColor;
-        display: block;
-        background: $buttonColor;
-        font-size: 20px;
-        padding: 10px 35px;
-        border: 2px solid $buttonColor;
-        color: white;
-        cursor: pointer;
-        border-radius: 8px;
-
-        &:hover {
-          background: darken($buttonColor, 10%);
-          border: 2px solid darken($buttonColor, 10%);
-        }
-
-        &:focus {
-          background: transparent;
-          color: $buttonColor;
-          outline: 0;
         }
       }
     }

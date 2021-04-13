@@ -1,6 +1,8 @@
 $maxWidth: 1200px;
 $dark-grey: #525f7f;
 $dark-gray: #525f7f;
+$light-gray: lighten($dark-gray, 20%);
+$light-grey: lighten($dark-gray, 20%);
 $accentColor: #2A1E5C;
 
 $w: #FFFBD8;
@@ -11,3 +13,4 @@ $g: #9AD1AF;
 
 $transitionAll: 0.2s all;
 $simpleShadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+$darkerShadow: rgba(100, 100, 111, 0.4) 0px 17px 29px 0px
