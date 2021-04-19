@@ -29,10 +29,10 @@
 
               <div class="commander_counts">
                 <div class="count" @click="setCommanderCount(1)" :class="{ active: commander_count === 1 }">
-                  Single Commander
+                  Single-Image Commander
                 </div>
                 <div class="count" @click="setCommanderCount(2)" :class="{ active: commander_count === 2 }">
-                  Dual Commanders
+                  Dual-Image Commander(s)
                 </div>
               </div>
 

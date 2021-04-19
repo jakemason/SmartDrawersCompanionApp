@@ -1,0 +1,56 @@
+.deck-preview {
+  padding: 20px;
+  box-shadow: $simpleShadow;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: $transitionAll;
+
+  &:hover {
+    transform: translateY(-10px);
+    box-shadow: $darkerShadow;
+  }
+
+  $secondImageOffset: 20px;
+
+  .deck-title {
+    font-size: 18px;
+    font-style: italic;
+    font-weight: bold;
+  }
+
+  .selected-colors {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 0;
+    //margin: 0 0 $verticalSpace;
+    list-style: none;
+    opacity: 0.8;
+
+    li {
+      $size: 25px;
+      width: $size;
+      height: $size;
+      margin-right: 10px;
+      border-radius: 100%;
+    }
+  }
+
+  &.double_image {
+    .images {
+      margin-bottom: $secondImageOffset + 5px;
+    }
+  }
+
+  .images {
+    position: relative;
+    margin-bottom: $secondImageOffset;
+
+    .second-commander {
+      position: absolute;
+      top: $secondImageOffset;
+      left: 0;
+    }
+  }
+}

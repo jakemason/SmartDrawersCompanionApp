@@ -47,6 +47,10 @@ li {
   font-style: italic;
 }
 
+.section-title {
+  margin: 40px 0;
+}
+
 button {
   @include button($accentColor);
 

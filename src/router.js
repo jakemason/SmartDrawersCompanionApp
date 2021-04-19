@@ -8,12 +8,7 @@ import Router from 'vue-router'
 // that need to be individually enqueued by WordPress. Need to see how we can work
 // around that.
 const DeckEditing = () => import('./components/pages/DeckEditing.vue')
-// const PostSingle = () => import('./components/singles/Post')
-// const PageSingle = () => import('./components/singles/Page')
-// const SearchSingle = () => import('./components/singles/Search')
-// const PostArchive = () => import('./components/archives/Post')
-// const FourOhFour = () => import('./components/global/404')
-
+const DrawerEditor = () => import('./components/pages/DrawerEditor.vue')
 
 Vue.use(Router);
 
@@ -23,8 +18,8 @@ const router = new Router({
         // 404 above regex captures to preserve priority
         //{path: '/404', name: '404', component: FourOhFour},
         {path: '/', name: 'Home', component: DeckEditing},
+        {path: '/drawer-editor', name: 'Drawer Editor', component: DrawerEditor}
     ],
-
 
     // Prevents window from scrolling back to top
     // when navigating between components/views

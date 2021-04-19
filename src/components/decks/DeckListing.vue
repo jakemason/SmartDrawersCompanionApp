@@ -1,47 +1,27 @@
 <template>
   <div class="deck-listing">
-    <div class="container">
-      <div class="row">
-        <div class="col-12">
-          <h2 class="center title" v-if='this.decks != null && Object.keys(this.decks).length > 0'>Select A Deck To
-            Edit:</h2>
-          <ul>
-            <li v-for="deck in this.decks" :key="deck.index">
-              <div class="entry" @click="changeDeck(deck.index)" :class="{ double_image: deck.commander_count === 2 }">
-                <p class="center deck-title">{{ deck.deck_name }} </p>
-                <div class="images">
-                  <img :src="deck.commander_images.first" alt="">
-                  <img class="second-commander" :class="{ hidden: deck.commander_count === 1 }"
-                       :src="deck.commander_images.second" alt="">
-                </div>
-
-                <ul class="selected-colors">
-                  <li class="w" :class="{ hidden: !deck.w }"><img src="dist/images/W.png" alt=""></li>
-                  <li class="u" :class="{ hidden: !deck.u }"><img src="dist/images/U.png" alt=""></li>
-                  <li class="b" :class="{ hidden: !deck.b }"><img src="dist/images/B.png" alt=""></li>
-                  <li class="r" :class="{ hidden: !deck.r }"><img src="dist/images/R.png" alt=""></li>
-                  <li class="g" :class="{ hidden: !deck.g }"><img src="dist/images/G.png" alt=""></li>
-                  <li class="c" :class="{ hidden: !deck.c }"><img src="dist/images/C.png" alt=""></li>
-                </ul>
-              </div>
-
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
+    <ul>
+      <li class="top-level-list" v-for="deck in this.decks" :key="deck.index">
+        <DeckPreview @changeDeck="changeDeck" :deck="deck"></DeckPreview>
+      </li>
+    </ul>
   </div>
 </template>
 
 <script>
+
+import DeckPreview from "./DeckPreview";
+
 export default {
   name: 'DeckListing',
   props: ['decks'],
+  components: {
+    DeckPreview
+  },
   watch: {
     deep: true,
     decks: function (newVal) {
       this.$props.decks = newVal;
-      console.log("YEPPERS")
     }
   },
   methods: {

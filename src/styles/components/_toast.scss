@@ -1,0 +1,42 @@
+.toast {
+  position: fixed;
+  top: 25px;
+  right: 25px;
+  opacity: 0;
+
+  &.animate {
+    animation: slidein 5s ease-out;
+    animation-iteration-count: 1;
+
+    @keyframes slidein {
+      0% {
+        transform: translateY(40px);
+        opacity: 0;
+      }
+      30% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      70% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0;
+      }
+    }
+  }
+
+  p {
+    padding: 20px;
+    background: #d4edda;
+    border-radius: 8px;
+  }
+
+  .error p {
+    background: #f8d7da;
+  }
+
+  * {
+    color: #155724;
+  }
+}

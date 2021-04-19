@@ -25,7 +25,7 @@ export default {
     return {
       nav: [
         {is_relative_link: 'true', title: 'Commanders', url: '/'},
-        {is_relative_link: 'true', title: 'Shelves', url: '/test'},
+        {is_relative_link: 'true', title: 'Drawer Editor', url: '/drawer-editor'},
       ],
     }
   }
