@@ -1,0 +1,53 @@
+.drawer-editor {
+  .deck-listing {
+    margin: 20px;
+
+    .deck-preview {
+      padding: 10px;
+
+      .selected-colors li {
+        width: 20px;
+        margin-right: 1px;
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  .scrollable-column {
+    height: 80%;
+    overflow-y: scroll;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  .drawer-container {
+    margin-bottom: 15px;
+
+    .drawer {
+      $rowHeight: 160px;
+      border: 2px solid black;
+      border-top: 3px solid black;
+      border-bottom: 3px solid black;
+
+      .drawer-row {
+        width: 100%;
+        height: $rowHeight;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid black;
+
+
+        .drawer-column {
+          width: 25%;
+          height: $rowHeight;
+          display: inline-block;
+          text-align: center;
+          border: 1px solid black;
+        }
+      }
+    }
+  }
+}

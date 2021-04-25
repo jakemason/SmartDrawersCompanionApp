@@ -1,7 +1,21 @@
-.deck-listing {
+.deck-editing .deck-listing {
   li {
-    width: 20%;
-    margin-right: 1%;
+    width: 24%;
+  }
+}
+
+.deck-listing {
+  ul {
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  li {
+    width: 32%;
+    margin-left: 0.5%;
+    margin-right: 0.5%;
     display: inline-block;
   }
 
@@ -10,14 +24,8 @@
     display: flex;
 
     .deck-preview {
+      // overflow-x: hidden;
       flex-grow: 1;
     }
-  }
-
-
-  ul {
-    padding: 0;
-    list-style: none;
-    display: flex;
   }
 }

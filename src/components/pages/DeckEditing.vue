@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="deck-editing">
     <Toast :message="toast_message" :isError="toast_is_error" :lastTriggered="toast_last_triggered"></Toast>
     <div class="container">
       <div class="row">

@@ -5,7 +5,7 @@
         <DeckPreview @changeDeck="changeDeck" :deck="deck"></DeckPreview>
       </li>
       <li v-if='this.showNewDeckButton === true && this.decks != null && Object.keys(this.decks).length > 0'
-          class="top-level-list">
+          class="top-level-list" style="min-height: 400px;">
         <div class="deck-preview" @click="newDeck">
           <div class="add-new-deck-button">
             Add New Deck <i class="fa fa-user-plus"></i>
