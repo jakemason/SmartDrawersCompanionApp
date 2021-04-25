@@ -7,7 +7,10 @@
             <li v-for="item in nav">
               <NavigationItem :item="item"></NavigationItem>
             </li>
+            <li><a :href="exportData()" download="DrawerData.json">Export</a></li>
+            <li><a href="#" @click="importData">Import</a></li>
           </ul>
+          <input @change="fileToJson" id="importData" type="file" class="hidden">
         </nav>
       </div>
     </div>
@@ -20,6 +23,31 @@ import NavigationItem from "./NavigationItem";
 export default {
   components: {
     NavigationItem
+  },
+  methods: {
+    exportData() {
+      let data = localStorage.getItem('decks');
+      let blob = new Blob([data], {type: 'text/json'});
+
+      let objectURL = URL.createObjectURL(blob);
+      return objectURL;
+    },
+    importData(e) {
+      e.preventDefault();
+      let fileUpload = document.querySelector('#importData');
+      fileUpload.click();
+    },
+    fileToJson(event) {
+      let file = document.getElementById('importData').files[0];
+      let reader = new FileReader();
+      reader.readAsText(file);
+      console.log(reader);
+      reader.onload = function () {
+        let json = JSON.parse(reader.result);
+        localStorage.setItem('decks', JSON.stringify(json));
+        window.history.go(); // just force a total reload to get all components reloaded
+      }
+    }
   },
   data() {
     return {
