@@ -1,6 +1,6 @@
 <template>
   <router-link :class="active" v-if="item.is_relative_link" :to="{ path: item.url }">
-    {{ item.title }}
+    <i class="fa" :class="item.icon"></i> {{ item.title }}
   </router-link>
 </template>
 

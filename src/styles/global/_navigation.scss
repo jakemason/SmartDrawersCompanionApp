@@ -18,9 +18,19 @@
       padding: 5px 25px;
       border-radius: 12px;
 
+      i {
+        margin-right: 6px;
+        transition: $transitionAll;
+      }
+
       &:hover {
         color: lighten($dark-gray, 35%);
         background: #f8f8f8;
+
+        i {
+          color: lighten($dark-gray, 35%);
+          background: #f8f8f8;
+        }
       }
 
       &.router-link-exact-active {

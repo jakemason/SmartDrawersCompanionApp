@@ -2,10 +2,6 @@
   <div class="container">
     <div class="row">
       <div class="col-12">
-        <div style="margin-bottom: 40px;" v-if="is_saved" class="center">
-          <h2>Currently Editing: {{ this.deck_name }}</h2>
-          <button @click="addNewDeck($event)" class="new_deck">Add A New Deck</button>
-        </div>
         <div class="deck-editor card active">
           <div class="image">
             <img :src="commander_images.first" alt="First Commander"/>

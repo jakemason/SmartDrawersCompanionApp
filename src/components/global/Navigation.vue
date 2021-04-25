@@ -7,8 +7,8 @@
             <li v-for="item in nav">
               <NavigationItem :item="item"></NavigationItem>
             </li>
-            <li><a :href="exportData()" download="DrawerData.json">Export</a></li>
-            <li><a href="#" @click="importData">Import</a></li>
+            <li><a :href="exportData()" download="DrawerData.json"><i class="fa fa-cloud-download"></i> Save</a></li>
+            <li><a href="#" @click="importData"><i class="fa fa-cloud-upload"></i> Load From File</a></li>
           </ul>
           <input @change="fileToJson" id="importData" type="file" class="hidden">
         </nav>
@@ -52,8 +52,8 @@ export default {
   data() {
     return {
       nav: [
-        {is_relative_link: 'true', title: 'Commanders', url: '/'},
-        {is_relative_link: 'true', title: 'Drawer Editor', url: '/drawer-editor'},
+        {is_relative_link: 'true', title: 'Commanders', url: '/', icon: 'fa-group'},
+        {is_relative_link: 'true', title: 'Drawer Editor', url: '/drawer-editor', icon: 'fa-edit'},
       ],
     }
   }

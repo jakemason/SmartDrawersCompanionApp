@@ -1,8 +1,6 @@
 <template>
   <div>
     <Toast :message="toast_message" :isError="toast_is_error" :lastTriggered="toast_last_triggered"></Toast>
-    <DeckEditor @newDeck="onCreateNewDeck" @save="onDeckSave" @deleteDeck="onDelete"
-                :deck_index="currently_editing"></DeckEditor>
     <div class="container">
       <div class="row">
         <div class="col-12">
@@ -12,6 +10,10 @@
         </div>
       </div>
     </div>
+
+    <DeckEditor id="deckEditor" @newDeck="onCreateNewDeck" @save="onDeckSave" @deleteDeck="onDelete"
+                :deck_index="currently_editing"></DeckEditor>
+
   </div>
 </template>
 
@@ -51,7 +53,13 @@ export default {
     },
     onDeckChange(index) {
       this.currently_editing = index;
-      console.log("Now editing: " + this.currently_editing);
+      let deckEditor = document.getElementById('deckEditor');
+      window.scroll({
+        top: deckEditor.offsetTop,
+        left: 0,
+        behavior: 'smooth'
+      })
+      console.log("Now editing!: " + this.currently_editing);
     },
     onDeckSave(deckAsJson) {
       this.toast_message = "Your changes have been saved.";
