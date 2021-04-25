@@ -14,6 +14,7 @@ Vue.use(Router);
 
 const router = new Router({
     mode: 'history',
+    //base: '/mtg/', //used for testing w/ Jonny
     routes: [
         // 404 above regex captures to preserve priority
         //{path: '/404', name: '404', component: FourOhFour},

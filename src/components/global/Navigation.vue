@@ -7,7 +7,10 @@
             <li v-for="item in nav">
               <NavigationItem :item="item"></NavigationItem>
             </li>
-            <li><a :href="exportData()" download="DrawerData.json"><i class="fa fa-cloud-download"></i> Save</a></li>
+            <li>
+              <a href="#" @click="exportData"><i class="fa fa-cloud-download"></i> Save</a>
+              <a id="saveData" class="hidden" download="DrawerData.json"></a>
+            </li>
             <li><a href="#" @click="importData"><i class="fa fa-cloud-upload"></i> Load From File</a></li>
           </ul>
           <input @change="fileToJson" id="importData" type="file" class="hidden">
@@ -25,11 +28,14 @@ export default {
     NavigationItem
   },
   methods: {
-    exportData() {
+    exportData(e) {
+      e.preventDefault();
+      let download = document.getElementById('saveData');
       let data = localStorage.getItem('decks');
       let blob = new Blob([data], {type: 'text/json'});
-
       let objectURL = URL.createObjectURL(blob);
+      download.href = objectURL;
+      download.click();
       return objectURL;
     },
     importData(e) {
