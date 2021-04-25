@@ -9,7 +9,10 @@
                  :class="{ hidden: commander_count === 1 }" alt="Second Commander"/>
           </div>
           <div class="content">
-            <h2 class="center italics">{{ deck_name }}</h2>
+            <h2 class="center italics">
+              <span v-if="deck_name !== ''">Editing:</span>
+              {{ deck_name }}
+            </h2>
             <form @submit="save" action="#" enctype="multipart/form-data">
               <label for="deck_name">
                 Deck Name

@@ -53,4 +53,12 @@
       left: 0;
     }
   }
+
+  .add-new-deck-button {
+    font-size: 35px;
+    text-align: center;
+    position: relative;
+    top: 50%;
+    transform: translate(0, -50%);
+  }
 }

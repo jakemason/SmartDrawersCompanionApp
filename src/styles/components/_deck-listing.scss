@@ -7,10 +7,17 @@
 
   li.top-level-list {
     min-width: 80px;
+    display: flex;
+
+    .deck-preview {
+      flex-grow: 1;
+    }
   }
+
 
   ul {
     padding: 0;
     list-style: none;
+    display: flex;
   }
 }

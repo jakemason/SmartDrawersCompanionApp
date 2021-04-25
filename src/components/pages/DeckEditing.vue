@@ -6,7 +6,8 @@
         <div class="col-12">
           <h2 class="center section-title" v-if='this.decks != null && Object.keys(this.decks).length > 0'>Select A Deck
             To Edit:</h2>
-          <DeckListing @changeDeck="onDeckChange" :decks="decks"></DeckListing>
+          <DeckListing @newDeck="onCreateNewDeck" @changeDeck="onDeckChange" :decks="decks"
+                       :showNewDeckButton="true"></DeckListing>
         </div>
       </div>
     </div>
@@ -28,6 +29,11 @@ export default {
   methods: {
     onCreateNewDeck() {
       this.currently_editing = this.decks != null ? Object.keys(this.decks).length : 0;
+      window.scroll({
+        top: document.body.scrollHeight,
+        left: 0,
+        behavior: 'smooth'
+      });
       console.log("New Deck being added, now editing a new deck at index: " + this.currently_editing);
     },
     onDelete(index) {
@@ -55,11 +61,10 @@ export default {
       this.currently_editing = index;
       let deckEditor = document.getElementById('deckEditor');
       window.scroll({
-        top: deckEditor.offsetTop,
+        top: document.body.scrollHeight,
         left: 0,
         behavior: 'smooth'
-      })
-      console.log("Now editing!: " + this.currently_editing);
+      });
     },
     onDeckSave(deckAsJson) {
       this.toast_message = "Your changes have been saved.";
@@ -79,9 +84,12 @@ export default {
       currentDecks[this.currently_editing] = deck;
       this.decks = currentDecks != null ? currentDecks : null;
 
-      console.log(this.decks);
       localStorage.setItem('decks', JSON.stringify(currentDecks));
-
+      window.scroll({
+        top: document.body.scrollHeight,
+        left: 0,
+        behavior: 'smooth'
+      })
     }
   },
   mounted() {

@@ -28,11 +28,6 @@ export default {
   methods: {
     changeDeck(index) {
       this.$emit('changeDeck', index);
-      window.scroll({
-        top: 0,
-        left: 0,
-        behavior: 'smooth'
-      })
     }
   }
 }
