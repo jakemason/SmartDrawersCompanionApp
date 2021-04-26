@@ -24,17 +24,17 @@
       }
 
       &:hover {
-        color: lighten($dark-gray, 35%);
+        //  color: lighten($dark-gray, 35%);
         background: #f8f8f8;
 
         i {
-          color: lighten($dark-gray, 35%);
+          //    color: lighten($dark-gray, 35%);
           background: #f8f8f8;
         }
       }
 
       &.router-link-exact-active {
-        background: #F3F3F3;
+        background: darken(#f8f8f8, 5%);
       }
     }
   }

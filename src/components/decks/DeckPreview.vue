@@ -16,8 +16,6 @@
       <li class="c" :class="{ hidden: !deck.c }"><img src="dist/images/C.png" alt=""></li>
     </ul>
   </div>
-
-
 </template>
 
 <script>

@@ -7,7 +7,7 @@
           <h2 class="center section-title" v-if='this.decks != null && Object.keys(this.decks).length > 0'>Select A Deck
             To Edit:</h2>
           <DeckListing @newDeck="onCreateNewDeck" @changeDeck="onDeckChange" :decks="decks"
-                       :showNewDeckButton="true"></DeckListing>
+                       :showNewDeckButton="true" :showAllAlways="true"></DeckListing>
         </div>
       </div>
     </div>

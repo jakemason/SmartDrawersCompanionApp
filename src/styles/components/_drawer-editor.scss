@@ -1,7 +1,9 @@
 .drawer-editor {
   .deck-listing {
     margin: 20px;
+  }
 
+  .deck-listing, .drawer-column {
     .deck-preview {
       padding: 10px;
 
@@ -23,13 +25,30 @@
   }
 
   .drawer-container {
-    margin-bottom: 15px;
+    margin-bottom: 35px;
 
     .drawer {
-      $rowHeight: 160px;
+      $rowHeight: 210px;
       border: 2px solid black;
       border-top: 3px solid black;
       border-bottom: 3px solid black;
+      position: relative;
+
+      .drawer-handle {
+        position: absolute;
+        $height: 20px;
+        height: $height;
+        bottom: -$height;
+
+        right: 0;
+        border: 4px solid black;
+        $width: 140px;
+        width: $width;
+        left: calc(50% - (#{$width} / 2));
+
+        border-bottom-left-radius: 20px;
+        border-bottom-right-radius: 20px;
+      }
 
       .drawer-row {
         width: 100%;
@@ -37,7 +56,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        border: 1px solid black;
+        border: 2px solid black;
 
 
         .drawer-column {
@@ -45,7 +64,8 @@
           height: $rowHeight;
           display: inline-block;
           text-align: center;
-          border: 1px solid black;
+          border: 2px solid black;
+          overflow: hidden;
         }
       }
     }

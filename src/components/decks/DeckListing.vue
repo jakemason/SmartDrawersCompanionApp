@@ -1,8 +1,10 @@
 <template>
   <div class="deck-listing">
     <ul>
-      <li class="top-level-list" v-for="deck in this.decks" :key="deck.index">
-        <DeckPreview @changeDeck="changeDeck" :deck="deck"></DeckPreview>
+      <li class="top-level-list" v-for="deck in this.decks" v-if="(deck.drawer === -1) || showAllAlways"
+          :key="deck.index">
+        <DeckDragable v-if="dragableDecks " @changeDeck="changeDeck" :deck="deck"></DeckDragable>
+        <DeckPreview v-else @changeDeck="changeDeck" :deck="deck"></DeckPreview>
       </li>
       <li v-if='this.showNewDeckButton === true && this.decks != null && Object.keys(this.decks).length > 0'
           class="top-level-list" style="min-height: 400px;">
@@ -19,12 +21,14 @@
 <script>
 
 import DeckPreview from "./DeckPreview";
+import DeckDragable from "./DeckDragable";
 
 export default {
   name: 'DeckListing',
-  props: ['decks', 'showNewDeckButton'],
+  props: ['decks', 'showNewDeckButton', 'showAllAlways', 'dragableDecks'],
   components: {
-    DeckPreview
+    DeckPreview,
+    DeckDragable
   },
   watch: {
     deep: true,

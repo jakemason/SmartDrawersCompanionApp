@@ -127,6 +127,9 @@ export default {
       c: false,
       is_saved: false,
       show_confirm_delete_prompt: false,
+      drawer: -1,
+      row: -1,
+      col: -1
     }
   },
   watch: {
@@ -157,6 +160,9 @@ export default {
         this.deck_name = deck.deck_name;
         this.commander_count = deck.commander_count;
         this.is_saved = true;
+        this.drawer = deck.drawer;
+        this.row = deck.row;
+        this.col = deck.col;
       }
       console.log("Updating editor.");
     }
@@ -181,6 +187,9 @@ export default {
       this.c = false;
       this.power_level = null;
       this.is_saved = false;
+      this.drawer = -1;
+      this.row = -1;
+      this.col = -1;
     },
     addNewDeck(e) {
       e.preventDefault();
