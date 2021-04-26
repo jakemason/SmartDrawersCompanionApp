@@ -36,12 +36,13 @@ export default {
       });
       console.log("New Deck being added, now editing a new deck at index: " + this.currently_editing);
     },
-    onDelete(index) {
-      this.toast_message = "Deck deleted.";
+    onDelete() {
+      this.toast_message = "Deleted: " + this.decks[this.currently_editing].deck_name;
       this.toast_is_error = true;
       this.toast_last_triggered = Date.now();
 
-      this.$delete(this.decks, index);
+      console.log("Deleting deck: " + this.decks[this.currently_editing].deck_name);
+      this.$delete(this.decks, this.currently_editing);
       let newlyKeyedDecks = {};
       let decksAsObject = JSON.parse(JSON.stringify(this.decks));
 
@@ -59,6 +60,7 @@ export default {
     },
     onDeckChange(index) {
       this.currently_editing = index;
+      console.log("Currently editing deck: " + index + " with name: " + this.decks[this.currently_editing].deck_name)
       let deckEditor = document.getElementById('deckEditor');
       window.scroll({
         top: document.body.scrollHeight,

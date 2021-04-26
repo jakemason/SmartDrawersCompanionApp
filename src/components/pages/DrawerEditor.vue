@@ -57,7 +57,6 @@ export default {
       this.save();
     },
     onDeckDrag(deck, drawer, row, col) {
-      console.log("Dragging deck");
       this.drag_start_drawer = drawer;
       this.drag_start_row = row;
       this.drag_start_col = col;
