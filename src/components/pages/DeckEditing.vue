@@ -11,10 +11,8 @@
         </div>
       </div>
     </div>
-
     <DeckEditor id="deckEditor" @newDeck="onCreateNewDeck" @save="onDeckSave" @deleteDeck="onDelete"
                 :deck_index="currently_editing"></DeckEditor>
-
   </div>
 </template>
 

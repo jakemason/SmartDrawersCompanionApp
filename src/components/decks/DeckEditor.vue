@@ -138,6 +138,11 @@ export default {
       TODO: What I probably should do is define Deck as a data-only component and pass that as a prop
             rather than passing the index like this.
       */
+      let commander_1_image = document.getElementById('commander_1_image');
+      let commander_2_image = document.getElementById('commander_2_image');
+      commander_1_image.value = null;
+      commander_2_image.value = null;
+
       let currentDecks = localStorage.getItem('decks');
       if (currentDecks != null) {
         currentDecks = JSON.parse(currentDecks);
