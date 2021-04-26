@@ -1,4 +1,8 @@
 .drawer-editor {
+  h2 {
+    text-align: center;
+  }
+
   .deck-listing {
     margin: 20px;
   }
@@ -68,6 +72,35 @@
           overflow: hidden;
         }
       }
+    }
+  }
+
+  .scroll {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    writing-mode: vertical-lr;
+    text-align: center;
+    animation: bounce 5s ease-in-out;
+    animation-iteration-count: infinite;
+    @keyframes bounce {
+      0% {
+        transform: translateY(-10px);
+      }
+      50% {
+        transform: translateY(0);
+      }
+      100% {
+        transform: translateY(-10px);
+      }
+    }
+
+    &.left {
+      left: 10px;
+    }
+
+    &.right {
+      right: -10px;
     }
   }
 }

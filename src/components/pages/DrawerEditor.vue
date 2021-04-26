@@ -6,9 +6,16 @@
              @drop="resetDeckPosition"
              @dragenter.prevent
              @dragover.prevent>
+          <div class="scroll left">
+            <p><i class="fa fa-angle-double-up"></i> Scroll Decks <i class="fa fa-angle-double-down"></i></p>
+          </div>
+          <h2>Drag Decks To Drawers</h2>
           <DeckListing @deckDragged="onDeckDrag" :decks="decks" :dragableDecks="true"></DeckListing>
         </div>
         <div class="col-6 scrollable-column">
+          <div class="scroll right">
+            <p><i class="fa fa-angle-double-up"></i> Scroll Drawers <i class="fa fa-angle-double-down"></i></p>
+          </div>
           <div v-for="drawer in drawers_needed" class="drawer-container">
             <h2>Drawer # {{ drawer }}</h2>
             <div class="drawer">
