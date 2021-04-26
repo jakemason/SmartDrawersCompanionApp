@@ -38,7 +38,7 @@
 </template>
 
 <script>
-
+import Dexie from "dexie";
 import DeckListing from "../decks/DeckListing";
 import DeckDragable from "../decks/DeckDragable";
 
@@ -46,8 +46,21 @@ export default {
   name: 'DrawerEditor',
   components: {DeckListing, DeckDragable},
   methods: {
-    save() {
-      localStorage.setItem('decks', JSON.stringify(this.decks));
+    async loadData() { //TODO: Pull out into global mixin?
+      let db = new Dexie('smartDrawersDB');
+      db.version(1).stores({
+        decks: 'id, data'
+      })
+
+      return await db.decks.get(0);
+    },
+    async saveData() { //TODO: Pull out into global mixin?
+      let db = new Dexie('smartDrawersDB');
+      db.version(1).stores({
+        decks: 'id, data'
+      })
+
+      await db.decks.put({id: 0, data: JSON.stringify(this.decks)});
     },
     getDeckAt(drawer, row, col) {
       for (let i = 0; i < Object.keys(this.decks).length; i++) {
@@ -61,7 +74,7 @@ export default {
       this.dragged_deck.drawer = -1;
       this.dragged_deck.row = -1;
       this.dragged_deck.col = -1;
-      this.save();
+      this.saveData();
     },
     onDeckDrag(deck, drawer, row, col) {
       this.drag_start_drawer = drawer;
@@ -84,17 +97,19 @@ export default {
         this.decks[swapDeck.index].col = this.drag_start_col;
       }
 
-      this.save();
+      this.saveData();
     }
   },
   mounted() {
-    let currentDecks = localStorage.getItem('decks');
-    if (currentDecks != null) {
-      currentDecks = JSON.parse(currentDecks);
-    }
-    this.decks = currentDecks ? currentDecks : null;
-    this.currently_editing = this.decks != null ? Object.keys(this.decks).length : 0;
-    this.drawers_needed = parseInt(Math.ceil(Object.keys(this.decks).length / 12));
+    this.loadData().then(value => {
+      let currentDecks = value.data;
+      if (currentDecks != null) {
+        currentDecks = JSON.parse(currentDecks);
+      }
+      this.decks = currentDecks ? currentDecks : null;
+      this.currently_editing = this.decks != null ? Object.keys(this.decks).length : 0;
+      this.drawers_needed = parseInt(Math.ceil(Object.keys(this.decks).length / 12));
+    });
   },
   data() {
     return {

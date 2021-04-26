@@ -22,6 +22,7 @@
 
 <script>
 import NavigationItem from "./NavigationItem";
+import Dexie from "dexie";
 
 export default {
   components: {
@@ -31,12 +32,13 @@ export default {
     exportData(e) {
       e.preventDefault();
       let download = document.getElementById('saveData');
-      let data = localStorage.getItem('decks');
-      let blob = new Blob([data], {type: 'text/json'});
-      let objectURL = URL.createObjectURL(blob);
-      download.href = objectURL;
-      download.click();
-      return objectURL;
+      this.loadData().then(value => {
+        let blob = new Blob([value.data], {type: 'text/json'});
+        let objectURL = URL.createObjectURL(blob);
+        download.href = objectURL;
+        download.click();
+        return objectURL;
+      });
     },
     importData(e) {
       e.preventDefault();
@@ -48,12 +50,30 @@ export default {
       let reader = new FileReader();
       reader.readAsText(file);
       console.log(reader);
-      reader.onload = function () {
+
+      reader.onload = () => {
         let json = JSON.parse(reader.result);
-        localStorage.setItem('decks', JSON.stringify(json));
-        window.history.go(); // just force a total reload to get all components reloaded
+        this.saveData(json).then(value => {
+          window.history.go(); // just force a total reload to get all components reloaded
+        });
       }
-    }
+    },
+    async loadData() { //TODO: Pull out into global mixin?
+      let db = new Dexie('smartDrawersDB');
+      db.version(1).stores({
+        decks: 'id, data'
+      })
+
+      return await db.decks.get(0);
+    },
+    async saveData(data) { //TODO: Pull out into global mixin?
+      let db = new Dexie('smartDrawersDB');
+      db.version(1).stores({
+        decks: 'id, data'
+      })
+
+      await db.decks.put({id: 0, data: JSON.stringify(data)});
+    },
   },
   data() {
     return {

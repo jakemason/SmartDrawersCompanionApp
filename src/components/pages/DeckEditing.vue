@@ -20,6 +20,7 @@
 import DeckEditor from "../decks/DeckEditor";
 import DeckListing from "../decks/DeckListing";
 import Toast from "../global/Toast";
+//required for Dexie, do not remove
 import regeneratorRuntime from "regenerator-runtime";
 import Dexie from 'dexie';
 
