@@ -19,7 +19,7 @@ module.exports = {
         filename: 'bundle.js',
         // Folder where the output of webpack's result go.
         path: resolve('dist'),
-		publicPath: '/dist/',
+        publicPath: '/dist/',
     },
     module: {
         rules: [
@@ -42,7 +42,7 @@ module.exports = {
             {
                 // vue-loader config to load `.vue` files or single file components.
                 test: /\.vue$/,
-				exclude: '/node_modules/',
+                exclude: '/node_modules/',
                 loader: 'vue-loader',
                 options: {
                     cacheBusting: true,
@@ -51,7 +51,7 @@ module.exports = {
             {
                 // This is required for other javascript you are gonna write besides vue.
                 test: /\.js$/,
-				exclude: '/node_modules/',
+                exclude: '/node_modules/',
                 loader: 'babel-loader',
                 options: {
                     presets: ['@babel/preset-env']
@@ -69,27 +69,27 @@ module.exports = {
      */
     devtool: '#eval-source-map',
     devServer: {
-		//index: '',
-		historyApiFallback: true,
+        //index: '',
+        historyApiFallback: true,
         // The url you want the webpack-dev-server to use for serving files.
         host: 'localhost',
         port: 8071,
         // gzip compression
         compress: true,
-		hot: true,
-		inline: true,
+        hot: true,
+        inline: true,
         // Open the browser window, set to false if you are in a headless browser environment.
         open: false,
-		/*
-		proxy: {
+        /*
+        proxy: {
             //TODO: hot reload doesn't work behind proxy. Fix this.
             '*': {
-				//context: () => true,
+                //context: () => true,
                 target: 'http://wpnew.test',
                 changeOrigin: true,
             },
         },
-		*/
+        */
         watchOptions: {
             ignored: /node_modules/,
             poll: true,

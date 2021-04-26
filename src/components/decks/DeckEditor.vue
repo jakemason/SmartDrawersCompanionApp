@@ -102,6 +102,8 @@
 </template>
 
 <script>
+import Dexie from "dexie";
+
 export default {
   name: 'DeckEditor',
   props: ['deck_index'],
@@ -143,36 +145,46 @@ export default {
       commander_1_image.value = null;
       commander_2_image.value = null;
 
-      let currentDecks = localStorage.getItem('decks');
-      if (currentDecks != null) {
-        currentDecks = JSON.parse(currentDecks);
-      }
-      let deck = currentDecks[newVal];
-      if (deck == null) {
-        this.reset();
-      } else {
-        this.w = deck.w;
-        this.u = deck.u;
-        this.b = deck.b;
-        this.r = deck.r;
-        this.g = deck.g;
-        this.c = deck.c;
-        this.power_level = deck.power_level;
+      //let currentDecks = localStorage.getItem('decks');
+      let loadedData = this.loadData().then(value => {
+        let currentDecks = JSON.parse(value.data);
+        let deck = currentDecks[newVal];
+        console.log(deck);
+        if (deck == null) {
+          console.log("Deck is null, resetting editor.");
+          this.reset();
+        } else {
+          this.w = deck.w;
+          this.u = deck.u;
+          this.b = deck.b;
+          this.r = deck.r;
+          this.g = deck.g;
+          this.c = deck.c;
+          this.power_level = deck.power_level;
 
-        this.index = deck.index;
-        this.commander_images.first = deck.commander_images.first;
-        this.commander_images.second = deck.commander_images.second;
-        this.deck_name = deck.deck_name;
-        this.commander_count = deck.commander_count;
-        this.is_saved = true;
-        this.drawer = deck.drawer;
-        this.row = deck.row;
-        this.col = deck.col;
-      }
-      console.log("Updating editor.");
+          this.index = deck.index;
+          this.commander_images.first = deck.commander_images.first;
+          this.commander_images.second = deck.commander_images.second;
+          this.deck_name = deck.deck_name;
+          this.commander_count = deck.commander_count;
+          this.is_saved = true;
+          this.drawer = deck.drawer;
+          this.row = deck.row;
+          this.col = deck.col;
+        }
+        console.log("Updating editor.");
+      });
     }
   },
   methods: {
+    async loadData() {
+      let db = new Dexie('smartDrawersDB');
+      db.version(1).stores({
+        decks: 'id, data'
+      })
+
+      return await db.decks.get(0);
+    },
     resetDelete() {
       this.show_confirm_delete_prompt = false;
     },

@@ -20,6 +20,8 @@
 import DeckEditor from "../decks/DeckEditor";
 import DeckListing from "../decks/DeckListing";
 import Toast from "../global/Toast";
+import regeneratorRuntime from "regenerator-runtime";
+import Dexie from 'dexie';
 
 export default {
   name: 'DeckEditing',
@@ -53,8 +55,25 @@ export default {
       }
 
       this.decks = newlyKeyedDecks;
-      localStorage.setItem('decks', JSON.stringify(this.decks));
-      this.currently_editing = this.decks != null ? Object.keys(this.decks).length : 0;
+      this.saveData().then((value => {
+        this.currently_editing = this.decks != null ? Object.keys(this.decks).length : 0;
+      }))
+    },
+    async loadData() { //TODO: Pull out into global mixin?
+      let db = new Dexie('smartDrawersDB');
+      db.version(1).stores({
+        decks: 'id, data'
+      })
+
+      return await db.decks.get(0);
+    },
+    async saveData() { //TODO: Pull out into global mixin?
+      let db = new Dexie('smartDrawersDB');
+      db.version(1).stores({
+        decks: 'id, data'
+      })
+
+      await db.decks.put({id: 0, data: JSON.stringify(this.decks)});
     },
     onDeckChange(index) {
       this.currently_editing = index;
@@ -74,35 +93,38 @@ export default {
       let deck = JSON.parse(deckAsJson);
       deck.index = this.currently_editing;
 
-      let currentDecks = localStorage.getItem('decks');
-      if (currentDecks != null) {
-        currentDecks = JSON.parse(currentDecks);
-      } else {
-        currentDecks = {};
-      }
+      this.loadData().then((value) => {
+        this.decks = value.data;
+        let currentDecks = this.decks;
+        if (currentDecks != null) {
+          currentDecks = JSON.parse(currentDecks);
+        } else {
+          currentDecks = {};
+        }
 
-      currentDecks[this.currently_editing] = deck;
-      this.decks = currentDecks != null ? currentDecks : null;
+        currentDecks[this.currently_editing] = deck;
+        this.decks = currentDecks != null ? currentDecks : null;
 
-      localStorage.setItem('decks', JSON.stringify(currentDecks));
-      window.scroll({
-        top: document.body.scrollHeight,
-        left: 0,
-        behavior: 'smooth'
-      })
+        this.saveData();
+        window.scroll({
+          top: document.body.scrollHeight,
+          left: 0,
+          behavior: 'smooth'
+        });
+      });
+
     }
   },
   mounted() {
-    let currentDecks = localStorage.getItem('decks');
-    if (currentDecks != null) {
-      currentDecks = JSON.parse(currentDecks);
-    }
-    this.decks = currentDecks ? currentDecks : null;
+    this.loadData().then(value => {
+      this.decks = JSON.parse(value.data);
+    });
+
     this.currently_editing = this.decks != null ? Object.keys(this.decks).length : 0;
   },
   data() {
     return {
-      currently_editing: 0,
+      currently_editing: -1,
       decks: {},
       toast_message: '',
       toast_is_error: false,

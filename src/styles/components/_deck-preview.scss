@@ -10,7 +10,7 @@
     box-shadow: $darkerShadow;
   }
 
-  $secondImageOffset: 20px;
+  $secondImageOffset: 45px;
 
   .deck-title {
     font-size: 18px;
@@ -39,7 +39,7 @@
 
   &.double_image {
     .images {
-      margin-bottom: $secondImageOffset + 5px;
+      margin-bottom: $secondImageOffset + 10px;
     }
   }
 
