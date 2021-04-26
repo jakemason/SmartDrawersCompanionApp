@@ -94,7 +94,7 @@ export default {
     }
     this.decks = currentDecks ? currentDecks : null;
     this.currently_editing = this.decks != null ? Object.keys(this.decks).length : 0;
-    this.drawers_needed = parseInt(Object.keys(this.decks).length / 12) + 1;
+    this.drawers_needed = parseInt(Math.ceil(Object.keys(this.decks).length / 12));
   },
   data() {
     return {
