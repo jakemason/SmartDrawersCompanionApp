@@ -49,18 +49,18 @@ export default {
     async loadData() { //TODO: Pull out into global mixin?
       let db = new Dexie('smartDrawersDB');
       db.version(1).stores({
-        decks: 'id, data'
-      })
+        decks: ''
+      });
 
       return await db.decks.get(0);
     },
     async saveData() { //TODO: Pull out into global mixin?
       let db = new Dexie('smartDrawersDB');
       db.version(1).stores({
-        decks: 'id, data'
-      })
+        decks: ''
+      });
 
-      await db.decks.put({id: 0, data: JSON.stringify(this.decks)});
+      await db.decks.put(JSON.stringify(this.decks), 0);
     },
     getDeckAt(drawer, row, col) {
       for (let i = 0; i < Object.keys(this.decks).length; i++) {
@@ -102,7 +102,7 @@ export default {
   },
   mounted() {
     this.loadData().then(value => {
-      let currentDecks = value.data;
+      let currentDecks = value;
       if (currentDecks != null) {
         currentDecks = JSON.parse(currentDecks);
       }

@@ -63,7 +63,7 @@ export default {
     async loadData() { //TODO: Pull out into global mixin?
       let db = new Dexie('smartDrawersDB');
       db.version(1).stores({
-        decks: 'id, data'
+        decks: ''
       })
 
       return await db.decks.get(0);
@@ -71,10 +71,10 @@ export default {
     async saveData() { //TODO: Pull out into global mixin?
       let db = new Dexie('smartDrawersDB');
       db.version(1).stores({
-        decks: 'id, data'
-      })
+        decks: ''
+      });
 
-      await db.decks.put({id: 0, data: JSON.stringify(this.decks)});
+      await db.decks.put(JSON.stringify(this.decks), 0);
     },
     onDeckChange(index) {
       this.currently_editing = index;
@@ -97,7 +97,7 @@ export default {
       this.$root.$emit('setLoadingStatus', true);
       this.loadData().then((value) => {
         this.$root.$emit('setLoadingStatus', false);
-        this.decks = value.data;
+        this.decks = value;
         let currentDecks = this.decks;
         if (currentDecks != null) {
           currentDecks = JSON.parse(currentDecks);
@@ -125,8 +125,9 @@ export default {
     console.log("Awaiting result");
     this.loadData().then(value => {
       console.log("Result received");
+      console.log(value);
       this.$root.$emit('setLoadingStatus', false);
-      this.decks = JSON.parse(value.data);
+      this.decks = JSON.parse(value);
     });
 
     this.currently_editing = this.decks != null ? Object.keys(this.decks).length : 0;

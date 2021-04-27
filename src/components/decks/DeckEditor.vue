@@ -147,7 +147,7 @@ export default {
 
       //let currentDecks = localStorage.getItem('decks');
       let loadedData = this.loadData().then(value => {
-        let currentDecks = JSON.parse(value.data);
+        let currentDecks = JSON.parse(value);
         let deck = currentDecks[newVal];
         console.log(deck);
         if (deck == null) {
@@ -180,7 +180,7 @@ export default {
     async loadData() {
       let db = new Dexie('smartDrawersDB');
       db.version(1).stores({
-        decks: 'id, data'
+        decks: ''
       })
 
       return await db.decks.get(0);

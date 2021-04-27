@@ -33,7 +33,7 @@ export default {
       e.preventDefault();
       let download = document.getElementById('saveData');
       this.loadData().then(value => {
-        let blob = new Blob([value.data], {type: 'text/json'});
+        let blob = new Blob([value], {type: 'text/json'});
         let objectURL = URL.createObjectURL(blob);
         download.href = objectURL;
         download.click();
@@ -53,7 +53,10 @@ export default {
 
       reader.onload = () => {
         let json = JSON.parse(reader.result);
+        this.decks = json;
+        this.$root.$emit('setLoadingStatus', true);
         this.saveData(json).then(value => {
+          this.$root.$emit('setLoadingStatus', false);
           window.history.go(); // just force a total reload to get all components reloaded
         });
       }
@@ -61,7 +64,7 @@ export default {
     async loadData() { //TODO: Pull out into global mixin?
       let db = new Dexie('smartDrawersDB');
       db.version(1).stores({
-        decks: 'id, data'
+        decks: ''
       })
 
       return await db.decks.get(0);
@@ -69,10 +72,11 @@ export default {
     async saveData(data) { //TODO: Pull out into global mixin?
       let db = new Dexie('smartDrawersDB');
       db.version(1).stores({
-        decks: 'id, data'
-      })
+        decks: ''
+      });
 
-      await db.decks.put({id: 0, data: JSON.stringify(data)});
+      console.log(JSON.stringify(this.decks));
+      await db.decks.put(JSON.stringify(this.decks), 0);
     },
   },
   data() {

@@ -10,7 +10,6 @@ export default {
   },
   methods: {
     loadingChange(value) {
-      console.log("OH YEAH BOY " + value);
       this.isLoading = value;
       let spinner = document.getElementById('loadingSpinner');
       if (this.isLoading) {
