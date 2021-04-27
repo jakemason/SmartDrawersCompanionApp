@@ -94,7 +94,9 @@ export default {
       let deck = JSON.parse(deckAsJson);
       deck.index = this.currently_editing;
 
+      this.$root.$emit('setLoadingStatus', true);
       this.loadData().then((value) => {
+        this.$root.$emit('setLoadingStatus', false);
         this.decks = value.data;
         let currentDecks = this.decks;
         if (currentDecks != null) {
@@ -117,7 +119,13 @@ export default {
     }
   },
   mounted() {
+    console.log("Mounted DeckEditing");
+    this.$root.$emit('setLoadingStatus', true);
+    console.log(this.$parent);
+    console.log("Awaiting result");
     this.loadData().then(value => {
+      console.log("Result received");
+      this.$root.$emit('setLoadingStatus', false);
       this.decks = JSON.parse(value.data);
     });
 
@@ -129,7 +137,7 @@ export default {
       decks: {},
       toast_message: '',
       toast_is_error: false,
-      toast_last_triggered: 0
+      toast_last_triggered: 0,
     }
   }
 }
