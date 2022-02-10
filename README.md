@@ -14,3 +14,7 @@ the power level the table would like to see at the game.
 - Each deck can also be assigned a power level so that it can be matched against similar decks.
 - Colors are also stored per deck so that presets can be loaded based on pieces of the pie. (Mono-colored matchups,
   tri-color matchups, etc) 
+
+
+  ## Disclaimer
+  I threw this thing together over a weekend so it's rough around the edges, but has worked well for our needs so far.
