@@ -16,5 +16,5 @@ the power level the table would like to see at the game.
   tri-color matchups, etc) 
 
 
-  ## Disclaimer
-  I threw this thing together over a weekend so it's rough around the edges, but has worked well for our needs so far.
+## Disclaimer
+I threw this thing together over a weekend so it's rough around the edges, but has worked well for our needs so far.
